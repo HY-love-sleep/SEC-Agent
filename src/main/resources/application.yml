@@ -25,7 +25,9 @@ spring:
         sse:
           connections:
             clft-agent-client:
-              url: http://192.168.33.115:8081/mcp/sec-classify-level/
+              url: http://172.16.22.18:8081/mcp/sec-classify-level/
+            colt-agent-client:
+              url: http://172.16.22.18:8081/mcp/sec-collector-management/
         version: 1.0.0
   mandatory-file-encoding: UTF-8
 

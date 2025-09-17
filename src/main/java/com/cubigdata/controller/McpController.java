@@ -1,8 +1,11 @@
 package com.cubigdata.controller;
 
+import com.cubigdata.controller.qry.ColtParam;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +28,7 @@ public class McpController {
     }
 
     @GetMapping("/api/clft/result")
-    public String processDataAsset(@RequestParam String dbName, @RequestParam String tbName) {
+    public String getClftResult(@RequestParam String dbName, @RequestParam String tbName) {
         try {
             ChatClient chatClient = chatClientBuilder
                     .defaultSystem("""
@@ -47,6 +50,93 @@ public class McpController {
             return "查询失败: " + e.getMessage() + "。请检查MCP服务器连接状态。";
         }
     }
+
+    @PostMapping("/api/colt/add")
+    public String addCollectionTask(@RequestBody ColtParam addParam) {
+        ChatClient chatClient = chatClientBuilder
+                .defaultSystem("""
+                        你是数据采集专家， 负责处理用户对采集程序服务的相关请求， 并调用对应工具进行处理
+                        你需要：
+                        1. 从用户侧获取查询的参数
+                        2. 调用相关工具进行采集任务的新增
+                        """)
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+                .build();
+        return chatClient.prompt()
+                .user("帮我根据请求参数:" + addParam.toString() + "新增一个采集任务")
+                .call()
+                .content();
+    }
+
+    @PostMapping("/api/colt/open")
+    public String openCollectionTask(@RequestBody ColtParam openParam) {
+        ChatClient chatClient = chatClientBuilder
+                .defaultSystem("""
+                        你是数据采集专家， 负责处理用户对采集程序服务的相关请求， 并调用对应工具进行处理
+                        你需要：
+                        1. 从用户侧获取要开启的采集任务的id
+                        2. 调用相关工具进行采集任务的新增
+                        """)
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+                .build();
+        return chatClient.prompt()
+                .user("帮我开启一个采集任务， 采集任务id=" + openParam.collectTaskId())
+                .call()
+                .content();
+    }
+
+    @PostMapping("/api/colt/exec")
+    public String execCollectionTask(@RequestBody ColtParam openParam) {
+        ChatClient chatClient = chatClientBuilder
+                .defaultSystem("""
+                        你是数据采集专家， 负责处理用户对采集程序服务的相关请求， 并调用对应工具进行处理
+                        你需要：
+                        1. 从用户侧获取要执行的采集任务的id
+                        2. 调用相关工具进行执行采集任务
+                        """)
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+                .build();
+        return chatClient.prompt()
+                .user("帮我执行一个采集任务， 采集任务id=" + openParam.collectTaskId())
+                .call()
+                .content();
+    }
+
+    @GetMapping("/api/colt/queryPage")
+    public String queryPage(@RequestParam String dbName) {
+        ChatClient chatClient = chatClientBuilder
+                .defaultSystem("""
+                        你是数据采集专家， 负责处理用户对采集程序服务的相关请求， 并调用对应工具进行处理
+                        你需要：
+                        1. 从用户侧获取数据库名称
+                        2. 调用相关工具获取对应的采集任务ID
+                        """)
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+                .build();
+        return chatClient.prompt()
+                .user("帮我查找数据库名" + dbName + "对应的采集任务ID")
+                .call()
+                .content();
+    }
+
+    @GetMapping("/api/clft/getDbId")
+    public String getDbId(@RequestParam String dbName) {
+        ChatClient chatClient = chatClientBuilder
+                .defaultSystem("""
+                        你是分类分级专家， 负责处理用户对分类分级服务的相关请求， 并调用对应工具进行处理
+                        你需要：
+                        1. 调用相关工具进行元数据列表的全量查询
+                        2. 根据用户提供的数据库名称， 筛选出对应的datasourceId
+                        """)
+                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
+                .build();
+        return chatClient.prompt()
+                .user("帮我查找数据库名" + dbName + "对应的数据库id")
+                .call()
+                .content();
+    }
+
+
 
     @GetMapping("/health")
     public String healthCheck() {
