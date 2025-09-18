@@ -3,9 +3,6 @@ package com.cubigdata.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-
-import java.time.Duration;
 
 /**
  * MCP客户端配置类

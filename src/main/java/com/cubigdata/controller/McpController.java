@@ -36,6 +36,7 @@ public class McpController {
                     你需要：
                     1. 从用户侧获取查询的参数
                     2. 调用相关工具进行分类分级结果查询
+                    3. 查询资产列表结果即可， 对应的position=0
                     """)
                     .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
                     .build();
