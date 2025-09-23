@@ -1,0 +1,1200 @@
+app:
+  description: 大模型prompt简化
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 分类分级-内蒙-v5
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/openai_api_compatible:0.0.16@77274df8fe2632cac66bfd153fcc75aa5e96abbe92b5c611b8984ad9f4cd4457
+- current_identifier: null
+  type: package
+  value:
+    plugin_unique_identifier: langgenius/ollama:0.0.6@7d66a960a68cafdcdf5589fdf5d01a995533f956853c69c54eddcf797006fa37
+kind: app
+version: 0.2.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1752826684738-source-1752826791996-target
+      source: '1752826684738'
+      sourceHandle: source
+      target: '1752826791996'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1752826791996-source-llm-target
+      source: '1752826791996'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-1752831626154-target
+      source: llm
+      sourceHandle: source
+      target: '1752831626154'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1752826684738-source-1753065026023-target
+      source: '1752826684738'
+      sourceHandle: source
+      target: '1753065026023'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1753065344545-source-1753065703548-target
+      source: '1753065344545'
+      sourceHandle: source
+      target: '1753065703548'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1753065703548-false-1753065744081-target
+      source: '1753065703548'
+      sourceHandle: 'false'
+      target: '1753065744081'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: variable-aggregator
+        targetType: code
+      id: 1753066157276-source-1753169712926-target
+      source: '1753066157276'
+      sourceHandle: source
+      target: '1753169712926'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: template-transform
+      id: 1753065703548-true-1753258014868-target
+      source: '1753065703548'
+      sourceHandle: 'true'
+      target: '1753258014868'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1753065026023-source-llm-target
+      source: '1753065026023'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1753258014868-source-1753066157276-target
+      source: '1753258014868'
+      sourceHandle: source
+      target: '1753066157276'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1753169712926-source-1754035680218-target
+      source: '1753169712926'
+      sourceHandle: source
+      target: '1754035680218'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1754035680218-source-1753080314230-target
+      source: '1754035680218'
+      sourceHandle: source
+      target: '1753080314230'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1753065744081-source-1753066141018-target
+      source: '1753065744081'
+      sourceHandle: source
+      target: '1753066141018'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: template-transform
+        targetType: variable-aggregator
+      id: 1753066141018-source-1753066157276-target
+      source: '1753066141018'
+      sourceHandle: source
+      target: '1753066157276'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1752831626154-source-1757577993335-target
+      source: '1752831626154'
+      sourceHandle: source
+      target: '1757577993335'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1757577993335-source-1753065344545-target
+      source: '1757577993335'
+      sourceHandle: source
+      target: '1753065344545'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: query
+          max_length: null
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+        - label: category
+          max_length: 500000
+          options: []
+          required: true
+          type: paragraph
+          variable: category
+      height: 114
+      id: '1752826684738'
+      position:
+        x: 99.54016316731776
+        y: 322
+      positionAbsolute:
+        x: 99.54016316731776
+        y: 322
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1752826791996'
+          - result
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-oss-120b
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 199c1f56-3c0c-4cb5-9281-be4558a786eb
+          role: system
+          text: "{{#1752826684738.query#}}请给我判断并返回上述表的以下信息，以JSON对象形式返回，\n1.每个字段所属目标类别:名为\
+            \ columnClassifications的属性，字符串型，要求备注第一条中的目标类别之一,字段之间的类别可以不一样，但都要在范围里不要给我瞎编类别\n\
+            2.每个字段所属级别:名为 columnLevel的属性，字符串型，请参考知识库中目标类别和级别对应关系，以及对级别的描述进行级别判断\n\
+            3.每个字段推理逻辑：名为 columnReasoning的属性，字符串型，字段推理过程举例:\"根据《中国联通数据分类分级安全管理规范（试行）》要求，本字段包含的信息为：{信息定义}（证据：{命名/样例/上下文证据简述}），描述字段用途，推测所属类别，分析数据敏感性（结合备注中第3条敏感性分析可参考依据），说明数据级别,提醒泄露后果\"\
+            \n4.每个字段的模型推理置信度:名为 modelReliability 的属性，字符串型，0-100分，0分表示模型完全不确定或认为预测极不可靠，100分表示模型高度确信且预测非常可靠\n\
+            5.每个字段的模型标识，名为 modelKey 的属性，字符串型，其值统一设置为\"gpt-oss-120b\"。\n6.该表的所属目标类别：名为\
+            \ tableClassifications的属性，字符串型，要求是备注第1条的目标类别，不要给我瞎编）\n7.该表的所属级别:名为 tableLevel的属性，字符串型，请参考知识库中目标类别和级别对应关系，以及对级别的描述进行级别判断\n\
+            8.表推理逻辑:名为 tableReasoning的属性，字符串型，表推理过程举例:\"根据《中国联通数据分类分级安全管理规范（试行）》要求，xxx表中包含姓名、身份证号、手机号等字段，本表宏类别判定：{用户相关数据|企业自身数据}（证据：字段分布—{用户相关字段占比}%\
+            \ 且关键字段：{关键字段列举}{，样例命中{高敏模式/规则} }）。遵循就高不就低原则，表级别取全表字段最高级为{tableLevel}级；若存在任一4级用户敏感要素（如身份证/银行卡/明文口令/完整手机号），则表级别至少为4级\"\
+            。\n9.表的模型推理置信度：名为 modelReliability 的属性，字符串型，每个字段的模型推理置信度:0-100分，0分表示模型完全不确定或认为预测极不可靠，100分表示模型高度确信且预测非常可靠\n\
+            10.每个表的模型标识，名为 modelKey 的属性，字符串型，其值统一设置为\"gpt-oss-120b\"。\n【决策流程（必须遵循）】\n\
+            (1) 表级宏类别先判（注意宏类别不输出）：先判定本表属于“用户相关数据”或“企业自身数据”。判定依据包括字段名/columnComment/exampleData/知识库；若发现任一4级用户敏感要素（如身份证号/银行卡号/明文口令/人脸指纹/完整手机号），强制判为用户相关数据。否则按证据多数与重要性加权判定（用户相关字段占比≥30%或关键字段权重更高→用户相关；否则企业自身）。\n\
+            (2) 字段目标类别选择（受宏类别白名单约束）：在表宏类别确定后，各字段的目标类别仅可从该宏类别对应的白名单集合中选择唯一类别（见“备注2”），禁止跨宏类别选择。\n\
+            (3) 结合 exampleData 做取值/格式校验：使用样例数据验证字段含义（如正则识别 11 位手机号、18 位身份证、银行卡 Luhn、地理坐标/地址、IP/MAC、账务科目编码等），若样例命中更高敏的模式，上调字段级别并在\
+            \ columnReasoning 写明证据。\n(4) 字段级别判定：依据“备注4 关联关系或发布前后规则”与“备注3 敏感性分析”综合判断：\n\
+            　• 独立出现“姓名”等弱敏→一般 3 级；与手机号/证件等同表共现→调至 4 级；\n　• 企业自身数据明确“发布后”可按规则降至 2 级（未明确发布则按未发布处理）。\n\
+            (5) 表级别判定（就高不就低）：表级别取全表字段的最高级；且若包含任一 4 级用户敏感字段，表级别至少为 4 级；企业自身数据在明确已对外发布时可降级至\
+            \ 2 级。\n(6) 一致性与冲突处理：若表宏类别与**≥30% 字段的推断不一致，需重审宏类别**；仍无法统一时，在 tableReasoning\
+            \ 记录冲突原因并将表级 modelReliability ≤ 60。\n(7) 历史冲突处理：参考“备注6 历史相似打标依据”，但当前分类必须严格采用备注1\
+            \ 的目标类别列表与“备注2 宏类别白名单”。若历史类别与现行不一致，仅参考其相似含义（如历史上\"住址\"对应现行\"居住地址\"）并映射到现行名称（如历史\"\
+            个人住址信息\"应转换为现行\"用户私密资料\"），不得跨宏类别套用历史名称。\n(8) 不确定性与置信度分档：证据（命名+备注+样例）齐全且一致→modelReliability\
+            \ ≥ 85；命名+备注一致但无样例→70–84；仅命名或仅样例→50–69；证据冲突/宏类别待确认→**标注“需人工确认”**且 ≤ 40。\n\
+            (9) 语言与表述：思考与回答均用中文；columnReasoning/tableReasoning 首句需包含：“根据《中国联通数据分类分级安全管理规范（试行）》要求…”，并点名触发的规则或样例证据（如“样例匹配\
+            \ 18 位身份证格式”）。\n(10)宏类别仅用于内部判定，不作为输出字段；不得在任意层级输出 macroCategory（含同义键名，如\
+            \ macro_category/macro），仅输出目标类别字段 columnClassifications 与 tableClassifications\n\
+            \n\n\n知识库参考资料：\n{{#context#}}\n备注：\n备注1.目标类别列表\n{{#1752826684738.category#}}，字段之间的类别可以不一样，但都要在以上范围里不要给我瞎编类别\n\
+            备注2.宏类别约束\na.企业自身数据：['网络规划建设', '投资计划', '项目管理', '公共资源数据', '传输资源数据', '承载网资源',\
+            \ '核心网资源', '接入网资源', '号卡资源', 'IT系统资源', '云资源', '信令', '路由', '网段、网址、VLAN划分',\
+            \ '设备监测、告警', '信令监测', '流量监测', '运维系统账号、密码等', '系统运行状况统计分析', '业务通用类', '网络与数据安全保障数据',\
+            \ '物理安全保障数据', '应急通信保障数据', '发展战略', '重大决策与重要会议', '市场策略', '财务预算', '关键技术成果',\
+            \ '财务信息', '法律', '行政区划面数据', '兴趣面数据', '建筑物块数据', '路网数据', '农村人口聚集区数据', '网络资源位置',\
+            \ '运维日志', '网格信息', '基层责任单元管理区域数据', '营销管理', '资费管理', '产品发展策略', '生产经营数据',\
+            \ '技术管理', '技术研究报告', '专利工作', '人力资源', '供应链管理', '监督管理信息', '运行管理数据', '考核相关信息',\
+            \ '基本业务订购信息', '产品信息', '产品数字内容业务运营数据', '资费信息', '公开的业务运营数据', '业绩披露']\nb.用户相关数据：['自然人身份标识',\
+            \ '实体身份证明', '用户私密资料', '用户密码及关联信息', '集团用户个人识别信息', '集团用户基本资料', '位置数据', '服务内容数据',\
+            \ '通信详单', '服务日志', '网络身份标识', '用户基本资料', '用户业务基本信息', '账户基本资料', '账务关系', '合同信息',\
+            \ '设备资料与信息', '客户服务信息', '用户使用习惯和行为分析数据', '用户上网行为相关统计分析数据', '集团用户实体身份证明',\
+            \ '基本业务订购信息', '增值业务订购信息', '消费信息', '账单', '渠道信息', '营销信息', '集团用户身份标识', '违规记录']\n\
+            \n备注3.敏感性分析\n可参考以下信息之一进行说明：\n**影响程度判定标准**\n（按严重性分为四级：**严重**、**高**、**中**、**低**）\n\
+            \n**1. 国家安全和社会公共利益影响**\n- **严重**：\n  对国家安全和社会公共利益构成**特别严重威胁**，数据涵盖范围涉及**全国**。\n\
+            - **高**：\n  构成**严重威胁**，数据涵盖范围涉及**多省市**。\n- **中**：\n  造成**较严重威胁**，数据影响范围涉及**部分省市**。\n\
+            - **低**：\n  仅造成**一定影响**，无广泛威胁性。\n\n---\n\n**2. 企业业务、财务、声誉等影响**\n- **严重**：\n\
+            \  - 导致**全部业务无法开展**，造成**特别严重经济损失**。\n  - 对**全国大量用户**产生负面效应，严重威胁企业声誉及用户信任度。\n\
+            - **高**：\n  - 导致**部分业务无法开展**，造成**严重经济损失**，影响**多省用户**。\n  - 对企业声誉和用户信任度构成**严重威胁**。\n\
+            - **中**：\n  - **个别业务短时中断**，造成**一定程度经济损失**，影响**某城市用户**。\n  - 对企业声誉和用户信任度产生**可恢复的负面影响**。\n\
+            - **低**：\n  - 仅造成**轻微经济损失**，**不影响业务稳定性**。\n\n---\n\n**3. 用户利益影响**\n- **严重**：\n\
+            \  用户可能遭受**重大且不可逆的损害**，例如：\n  - 无法承担的债务、丧失工作能力、长期心理/生理疾病、死亡等。\n- **高**：\n\
+            \  用户需付出**高昂代价克服影响**，例如：\n  - 资金盗用、信用黑名单、名誉受损、被解雇、健康状况恶化等。\n- **中**：\n\
+            \  用户面临**较严重困扰**，但可逐步解决，例如：\n  - 额外成本支出、服务无法使用、误解或短期心理压力、轻微生理疾病等。\n- **低**：\n\
+            \  用户遭受**短暂且可克服的困扰**，例如：\n  - 时间占用、骚扰、厌烦情绪等。\n\n备注4.关联关系或者发布前后例子:\n（1）独立出现的“姓名”，在不与手机号码、居住地址等其敏感数据\
+            \ 同时出现时，定为 3级数据;与手机号码、居住地址等其他敏感数据同时出现时，定为 4 级数据\n（2）企业自身数据中发布前是4级数据；发布后降为2级数据，发布是指对外公开发布。\n\
+            \n\n备注6.历史相似打标依据：\n\n最后结果以json格式严格返回，注意每个字段和表都要返回结果，不能省略同上：\n输出例子（仅为结构示意，注意类型与命名已统一）：{\n\
+            \  \"columnInfoList\": [\n    {\n      \"columnComment\": \"居住地址\",\n\
+            \      \"columnName\": \"residence_address\",\n      \"id\": 3,\n    \
+            \  \"columnClassifications\": \"用户私密资料\",\n      \"columnLevel\": \"3\"\
+            ,\n      \"modelKey\": \"gpt-oss-120b\",\n      \"modelReliability\":\
+            \ 30,\n      \"columnReasoning\": \"根据《中国联通数据分类分级安全管理规范（试行）》要求，本字段包含的信息为：个人常住地理位置信息（证据：命名/别名词典映射“residence_address→居住地址”，且字段描述与居住地址语义一致；若存在样例，通常含省市区/街道/门牌等结构化要素）。结合备注3的敏感性分析，该信息泄露会导致隐私暴露与线下安全风险；据此判定目标类别为“用户私密资料”，级别为3级，并提醒可能带来骚扰、精准营销、线下跟踪等后果\"\
+            \n    },\n    {\n      \"columnComment\": \"密码\",\n      \"columnName\"\
+            : \"password\",\n      \"id\": 2,\n      \"columnClassifications\": \"\
+            用户密码及关联信息\",\n      \"columnLevel\": \"4\",\n      \"modelKey\": \"gpt-oss-120b\"\
+            ,\n      \"modelReliability\": 95,\n      \"columnReasoning\": \"根据《中国联通数据分类分级安全管理规范（试行）》要求，本字段包含的信息为：账号登录凭据或其派生信息（证据：命名映射“password→口令/密码”；若样例为哈希/盐值/密文，同样指向口令凭据）。结合备注3的敏感性分析与备注4的关联关系规则，该信息一旦泄露可导致未授权访问、账号劫持与系统入侵等严重后果；据此判定目标类别为“用户密码及关联信息”，级别为4级，并提醒需采用强加密与最小化存取控制。\"\
+            \n    }\n  ],\n  \"dbId\": \"维持原id\",\n  \"id\": \"维持原id\",\n  \"tbComment\"\
+            : \"维持原表描述\",\n  \"tbName\": \"维持原表名\",\n  \"tableClassifications\": \"\
+            目标类别\",\n  \"tableLevel\": \"4\",\n  \"tableReasoning\": \"根据《中国联通数据分类分级安全管理规范（试行）》要求，表中包含姓名、身份证号、手机号等高敏要素（证据：字段清单与样例命中18位身份证格式、11位手机号正则等规则）；遵循就高不就低原则，表级别取全表字段最高级确定为4级；同时因存在4级用户敏感要素，表级别至少为4级。结合字段分布与关键字段证据，可据备注1选择与个人身份标识信息相匹配的目标类别进行标注。推断该表类别为个人信息类，级别为4级。\"\
+            ,\n  \"modelKey\": \"gpt-oss-120b\",\n  \"modelReliability\": 92\n}\n\
+            jsonschema:{\n  \"additionalProperties\": false,\n  \"properties\": {\n\
+            \    \"columnInfoList\": {\n      \"items\": {\n        \"additionalProperties\"\
+            : false,\n        \"properties\": {\n          \"columnClassifications\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"columnComment\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"columnLevel\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"columnName\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"columnReasoning\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"id\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"modelKey\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"modelReliability\"\
+            : {\n            \"type\": \"string\"\n          }\n        },\n     \
+            \   \"required\": [\n          \"columnComment\",\n          \"columnName\"\
+            ,\n          \"columnClassifications\",\n          \"columnLevel\",\n\
+            \          \"columnReasoning\",\n          \"modelReliability\",\n   \
+            \       \"modelKey\"\n        ],\n        \"type\": \"object\"\n     \
+            \ },\n      \"type\": \"array\"\n    },\n    \"dbId\": {\n      \"type\"\
+            : \"string\"\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n\
+            \    \"tableClassifications\": {\n      \"type\": \"string\"\n    },\n\
+            \    \"tableLevel\": {\n      \"type\": \"string\"\n    },\n    \"tableReasoning\"\
+            : {\n      \"type\": \"string\"\n    },\n    \"tbComment\": {\n      \"\
+            type\": \"string\"\n    },\n    \"tbName\": {\n      \"type\": \"string\"\
+            \n    },\n    \"modelKey\": {\n      \"type\": \"string\"\n    },\n  \
+            \  \"modelReliability\": {\n      \"type\": \"string\"\n    }\n  },\n\
+            \  \"required\": [\n    \"columnInfoList\",\n    \"dbId\",\n    \"tbComment\"\
+            ,\n    \"tbName\",\n    \"tableClassifications\",\n    \"tableLevel\"\
+            ,\n    \"tableReasoning\",\n    \"modelKey\",\n    \"modelReliability\"\
+            \n  ],\n  \"type\": \"object\"\n}"
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              columnInfoList:
+                items:
+                  additionalProperties: false
+                  properties:
+                    columnClassifications:
+                      type: string
+                    columnComment:
+                      type: string
+                    columnLevel:
+                      type: string
+                    columnName:
+                      type: string
+                    columnReasoning:
+                      type: string
+                    id:
+                      type: string
+                    modelKey:
+                      type: string
+                    modelReliability:
+                      type: string
+                  required:
+                  - columnComment
+                  - columnName
+                  - columnClassifications
+                  - columnLevel
+                  - columnReasoning
+                  - modelReliability
+                  - modelKey
+                  type: object
+                type: array
+              dbId:
+                type: string
+              id:
+                type: string
+              modelKey:
+                type: string
+              modelReliability:
+                type: string
+              tableClassifications:
+                type: string
+              tableLevel:
+                type: string
+              tableReasoning:
+                type: string
+              tbComment:
+                type: string
+              tbName:
+                type: string
+            required:
+            - columnInfoList
+            - dbId
+            - tbComment
+            - tbName
+            - tableClassifications
+            - tableLevel
+            - tableReasoning
+            - modelKey
+            - modelReliability
+            type: object
+        structured_output_enabled: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: llm
+      position:
+        x: 695.9645061728395
+        y: 313.3333333333333
+      positionAbsolute:
+        x: 695.9645061728395
+        y: 313.3333333333333
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - Qm1pgTSiTT94SZjl9hc9vTdYvaQXUCIUs1iNDoajLGkmh+6GaHa0+k7JzAQaej1Y
+        desc: ''
+        metadata_filtering_mode: disabled
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: bge-m3:567m
+              embedding_provider_name: langgenius/ollama/ollama
+              vector_weight: 1
+        query_variable_selector:
+        - '1752826684738'
+        - query
+        retrieval_mode: multiple
+        selected: true
+        title: 知识检索
+        type: knowledge-retrieval
+      height: 90
+      id: '1752826791996'
+      position:
+        x: 401.33333333333337
+        y: 237.765323375702
+      positionAbsolute:
+        x: 401.33333333333337
+        y: 237.765323375702
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1752831626154'
+      position:
+        x: 967.5470901875124
+        y: 313.3333333333333
+      positionAbsolute:
+        x: 967.5470901875124
+        y: 313.3333333333333
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport requests\n\ndef main(query: str) -> dict:\n   \
+          \ if not query:\n        return {\"output\": \"❌ 缺少 query 参数\"}\n\n    try:\n\
+          \        payload = {\n            \"inputs\": {\n                \"query\"\
+          : query,\n                \"threshold\": 0.6,\n                \"topN\"\
+          : 2\n            }\n        }\n        response = requests.post(\n     \
+          \       url=\"http://10.191.23.133:8899/match\",\n            json=payload,\n\
+          \            timeout=60\n        )\n\n        # 正确方式是：response.json() 拿\
+          \ dict，不转 str；再 json.dumps 时保顺序、保中文\n        result = response.json()  #\
+          \ 保留原始结构\n\n        if isinstance(result, dict) and \"output\" in result:\n\
+          \            content = result[\"output\"]\n            if isinstance(content,\
+          \ dict):\n                # 正确的 json 字符串格式化输出\n                formatted\
+          \ = json.dumps(content, ensure_ascii=False, indent=2)\n                return\
+          \ {\"output\": f\"```json\\n{formatted}\\n```\"}  # 这是最干净的方式\n         \
+          \   else:\n                return {\"output\": str(content)}\n        else:\n\
+          \            return {\"output\": str(result)}\n\n    except Exception as\
+          \ e:\n        return {\"output\": f\"❌ 请求失败：{str(e)}\"}"
+        code_language: python3
+        desc: ''
+        outputs:
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 相似度匹配
+        type: code
+        variables:
+        - value_selector:
+          - '1752826684738'
+          - query
+          variable: query
+      height: 52
+      id: '1753065026023'
+      position:
+        x: 401.33333333333337
+        y: 494.0880610001957
+      positionAbsolute:
+        x: 401.33333333333337
+        y: 494.0880610001957
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\nimport ast\ndef preprocess_input(input_str):\n    \"\"\
+          \"预处理输入字符串并转换为字典\"\"\"\n    try:\n        json_str = input_str.replace('json',\
+          \ '').replace('```', '').replace('\\\\n', '').replace(' ', '').replace(\"\
+          \\\\\",\n                                                              \
+          \                                                  \"\").strip()\n     \
+          \   input_dict = ast.literal_eval(json_str)\n        if not isinstance(input_dict,\
+          \ dict):\n            return None, {\"is_validate\": False, \"message\"\
+          : \"输入不是有效的字典，请确保提供JSON对象格式\",\n                          \"json_str\":\
+          \ json_str}\n        return input_dict, json_str, None\n    except json.JSONDecodeError:\n\
+          \        return None, None, {\"is_validate\": False, \"message\": \"输入不是有效的JSON格式，请检查括号、引号和逗号是否正确\"\
+          ,\n                            \"json_str\": input_str}\n\n\ndef validate_and_fix(dict_obj,\
+          \ json_str):\n    \"\"\"验证字典结构并收集所有错误，`validate_and_fix` 函数的主要功能是：\n   \
+          \ 1. 为缺失的非必需字段补充默认值\n2. 检查必需字段是否存在\n3. 检查 `columnInfoList` 的结构和内容\n4. 收集所有错误信息并返回结果\n\
+          \"\"\"\n    errors = []\n\n    # 定义默认值，对于顶层默认值中的每个键，如果在输入字典中不存在，则添加对应的默认值\n\
+          \    top_level_defaults = {\n    }\n\n    column_info_defaults = {\n   \
+          \ }\n\n    # 应用顶层默认值并检查必需的顶层键，如果有任何一个键不存在，则将错误信息添加到错误列表中\n    required_top_level_keys\
+          \ = [\n        \"columnInfoList\",\n        \"tbName\",\n        \"tableClassifications\"\
+          ,\n        \"tableLevel\",\n        \"tableReasoning\",\n    ]\n\n    #\
+          \ 先处理默认值\n    for key, default_value in top_level_defaults.items():\n  \
+          \      if key not in dict_obj:\n            dict_obj[key] = default_value\n\
+          \n    # 检查必需键\n    for key in required_top_level_keys:\n        if key not\
+          \ in dict_obj:\n            errors.append(f\"缺少顶层键: {key}，请添加该字段及其值\")\n\
+          \n    # 检查 columnInfoList\n    if \"columnInfoList\" not in dict_obj:\n\
+          \        errors.append(\"缺少 columnInfoList 字段，请添加该字段及其值\")\n    elif not\
+          \ isinstance(dict_obj[\"columnInfoList\"], list):\n        errors.append(\"\
+          columnInfoList 必须是列表，请将其改为数组格式 []\")\n    else:\n        # 定义必需的列键\n   \
+          \     required_column_keys = [\n            \"columnName\",\n          \
+          \  \"columnClassifications\",\n            \"columnLevel\",\n          \
+          \  \"columnReasoning\",\n        ]\n\n        # 检查 columnInfoList 中的每个元素\n\
+          \        for idx, column_info in enumerate(dict_obj[\"columnInfoList\"]):\n\
+          \            if not isinstance(column_info, dict):\n                errors.append(f\"\
+          columnInfoList 的第 {idx + 1} 项不是字典，请改为对象格式 {{}}\")\n                continue\n\
+          \n            # 应用列级别默认值\n            for key, default_value in column_info_defaults.items():\n\
+          \                if key not in column_info:\n                    column_info[key]\
+          \ = default_value\n\n            # 检查必需的列键\n            for key in required_column_keys:\n\
+          \                if key not in column_info:\n                    errors.append(f\"\
+          columnInfoList[{idx}] 缺少键: {key}，请为该列添加此字段\")\n\n    # 如果有错误，返回错误消息；否则，返回成功消息和补充了默认值的字典\n\
+          \    if errors:\n        error_message = \"发现以下问题，请修复：\\n- \" + \"\\n- \"\
+          .join(errors)\n        return {\"is_validate\": False, \"message\": error_message,\
+          \ \"json_str\": json_str}\n    else:\n        return {\"is_validate\": True,\
+          \ \"message\": \"字典结构检查通过\", \"json_str\": json_str}\ndef main(rest_content:\
+          \ str) -> dict:\n    \"\"\"验证输入字典结构并收集所有错误\"\"\"\n    # 主要流程\n    input_dict,\
+          \ json_str, error = preprocess_input(rest_content)\n    if error:\n    \
+          \    return error\n\n    # 验证结构并收集所有错误\n    return validate_and_fix(input_dict,\
+          \ json_str)"
+        code_language: python3
+        desc: ''
+        outputs:
+          is_validate:
+            children: null
+            type: number
+          json_str:
+            children: null
+            type: string
+          message:
+            children: null
+            type: string
+        selected: false
+        title: 结构化判断
+        type: code
+        variables:
+        - value_selector:
+          - '1757577993335'
+          - result
+          variable: rest_content
+      height: 52
+      id: '1753065344545'
+      position:
+        x: 1524.3474909480722
+        y: 313.3333333333333
+      positionAbsolute:
+        x: 1524.3474909480722
+        y: 313.3333333333333
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: 9f597f52-40ea-4459-9f88-a2e8fbbfa9be
+            value: '1'
+            varType: number
+            variable_selector:
+            - '1753065344545'
+            - is_validate
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 124
+      id: '1753065703548'
+      position:
+        x: 1806.106746111887
+        y: 308.6666666666667
+      positionAbsolute:
+        x: 1806.106746111887
+        y: 308.6666666666667
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1752826791996'
+          - result
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: qwen3-32b
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: cf2ca920-c8d7-4440-88b5-7202b044c537
+          role: system
+          text: "请将前一个大模型输出的内容(记作answer)：{{#llm.structured_output#}}，和检查出来的错误提示与建议：{{#1753065344545.message#}}，按照结构化输出的格式(记作jsonschema)填写，其中answer的value\
+            \ 如果能对应上，就填上，如果没对应上，就按照知识库给我补充上。\n结构化输出jsonschema为：{\n  \"additionalProperties\"\
+            : false,\n  \"properties\": {\n    \"columnInfoList\": {\n      \"items\"\
+            : {\n        \"additionalProperties\": false,\n        \"properties\"\
+            : {\n          \"columnClassifications\": {\n            \"type\": \"\
+            string\"\n          },\n          \"columnComment\": {\n            \"\
+            type\": \"string\"\n          },\n          \"columnLevel\": {\n     \
+            \       \"type\": \"number\"\n          },\n          \"columnName\":\
+            \ {\n            \"type\": \"string\"\n          },\n          \"columnReasoning\"\
+            : {\n            \"type\": \"string\"\n          },\n          \"dataItemId\"\
+            : {\n            \"items\": {\n              \"type\": \"string\",\n \
+            \             \"defalt\": []\n            },\n            \"type\": \"\
+            array\"\n          },\n          \"flag\": {\n            \"type\": \"\
+            string\",\n            \"defalt\": false\n          },\n          \"id\"\
+            : {\n            \"type\": \"number\"\n          },\n          \"resultSource\"\
+            : {\n            \"type\": \"number\",\n            \"defalt\": 0\n  \
+            \        }\n        },\n        \"required\": [\n          \"columnComment\"\
+            ,\n          \"columnName\",\n          \"dataItemId\",\n          \"\
+            flag\",\n          \"id\",\n          \"resultSource\",\n          \"\
+            columnClassifications\",\n          \"columnLevel\",\n          \"columnReasoning\"\
+            \n        ],\n        \"type\": \"object\"\n      },\n      \"type\":\
+            \ \"array\"\n    },\n    \"dataItems\": {\n      \"items\": {\n      \
+            \  \"type\": \"string\",\n        \"defalt\": []\n      },\n      \"type\"\
+            : \"array\"\n    },\n    \"dbId\": {\n      \"type\": \"string\"\n   \
+            \ },\n    \"flag\": {\n      \"type\": \"string\",\n      \"defalt\":\
+            \ false\n    },\n    \"id\": {\n      \"type\": \"string\"\n    },\n \
+            \   \"tableClassifications\": {\n      \"type\": \"string\"\n    },\n\
+            \    \"tableLevel\": {\n      \"type\": \"string\"\n    },\n    \"tableReasoning\"\
+            : {\n      \"type\": \"string\"\n    },\n    \"tbComment\": {\n      \"\
+            type\": \"string\"\n    },\n    \"tbName\": {\n      \"type\": \"string\"\
+            \n    }\n  },\n  \"required\": [\n    \"columnInfoList\",\n    \"dataItems\"\
+            ,\n    \"dbId\",\n    \"flag\",\n    \"id\",\n    \"tbComment\",\n   \
+            \ \"tbName\",\n    \"tableClassifications\",\n    \"tableLevel\",\n  \
+            \  \"tableReasoning\"\n  ],\n  \"type\": \"object\"\n}"
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              columnInfoList:
+                items:
+                  additionalProperties: false
+                  properties:
+                    columnClassifications:
+                      type: string
+                    columnComment:
+                      type: string
+                    columnLevel:
+                      type: number
+                    columnName:
+                      type: string
+                    columnReasoning:
+                      type: string
+                    dataItemId:
+                      items:
+                        defalt: []
+                        type: string
+                      type: array
+                    flag:
+                      defalt: false
+                      type: string
+                    id:
+                      type: number
+                    resultSource:
+                      defalt: 0
+                      type: number
+                  required:
+                  - columnComment
+                  - columnName
+                  - dataItemId
+                  - flag
+                  - id
+                  - resultSource
+                  - columnClassifications
+                  - columnLevel
+                  - columnReasoning
+                  type: object
+                type: array
+              dataItems:
+                items:
+                  defalt: []
+                  type: string
+                type: array
+              dbId:
+                type: string
+              flag:
+                defalt: false
+                type: string
+              id:
+                type: string
+              tableClassifications:
+                type: string
+              tableLevel:
+                type: string
+              tableReasoning:
+                type: string
+              tbComment:
+                type: string
+              tbName:
+                type: string
+            required:
+            - columnInfoList
+            - dataItems
+            - dbId
+            - flag
+            - id
+            - tbComment
+            - tbName
+            - tableClassifications
+            - tableLevel
+            - tableReasoning
+            type: object
+        structured_output_enabled: true
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1753065744081'
+      position:
+        x: 2090.3055555555557
+        y: 451.7932098765432
+      positionAbsolute:
+        x: 2090.3055555555557
+        y: 451.7932098765432
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 分支2-模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1753065744081'
+          - structured_output
+          variable: arg1
+      height: 52
+      id: '1753066141018'
+      position:
+        x: 2444.654259891824
+        y: 494.0880610001957
+      positionAbsolute:
+        x: 2444.654259891824
+        y: 494.0880610001957
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器 2
+        type: variable-aggregator
+        variables:
+        - - '1753066141018'
+          - output
+        - - '1753258014868'
+          - output
+      height: 129
+      id: '1753066157276'
+      position:
+        x: 2717.5857125083476
+        y: 288.8116392499506
+      positionAbsolute:
+        x: 2717.5857125083476
+        y: 288.8116392499506
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1754035680218.result#}}'
+        desc: ''
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 103
+      id: '1753080314230'
+      position:
+        x: 3769.9259595850635
+        y: 255.30793722920373
+      positionAbsolute:
+        x: 3769.9259595850635
+        y: 255.30793722920373
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import requests\nimport json\nimport numpy as np\nimport pandas as\
+          \ pd\nimport time\nimport warnings\nimport os\nos.environ['JOBLIB_TEMP_FOLDER']\
+          \ = '/tmp'\nimport warnings\nwarnings.filterwarnings(\"ignore\", message=\"\
+          .*joblib will operate in serial mode.*\")\nfrom sklearn.metrics.pairwise\
+          \ import cosine_similarity\n\ndef extract_dict_from_string(s0):\n    \"\"\
+          \"\n    从字符串中提取第一个 '{' 到最后一个 '}' 之间的内容，并解析成字典。\n\n    参数:\n        s0 (str):\
+          \ 可能包含 JSON/dict 的字符串\n\n    返回:\n        dict: 解析后的字典\n\n    异常:\n    \
+          \    ValueError: 如果字符串中没有 {} 或解析失败\n    \"\"\"\n    try:\n        # 清理字符串\n\
+          \        s = s0.replace('json', '').replace('```', '').replace('\\\\n',\
+          \ '').replace('\\\\', '').strip()\n\n        # 直接尝试解析整个字符串\n        try:\n\
+          \            return json.loads(s)\n        except json.JSONDecodeError:\n\
+          \            # 如果整个字符串解析失败，尝试提取花括号内的内容\n            start = s.find('{')\n\
+          \            end = s.rfind('}') + 1  # +1 是为了包含 }\n\n            if start\
+          \ == -1 or end == 0:\n                raise ValueError(\"无法在字符串中找到有效的JSON对象\"\
+          )\n\n            # 提取 JSON 部分\n            json_str = s[start:end]\n   \
+          \         print('提取的JSON字符串:', json_str)\n            # 直接尝试解析提取的JSON\n\
+          \            try:\n                return json.loads(json_str)\n       \
+          \     except json.JSONDecodeError:\n                # 如果仍然解析失败，使用eval作为后备方案\n\
+          \                # 注意：eval有安全风险，仅用于可信数据\n                return eval(json_str)\n\
+          \    except Exception as e:\n        raise ValueError(f\"JSON解析失败: {str(e)}\"\
+          )\n\n\ndef get_embedding(text, model=\"bge-m3:567m\"):\n    \"\"\"\n   \
+          \ 调用本地Ollama API获取文本的嵌入向量\n\n    参数:\n    - text: 要获取嵌入向量的文本或文本列表\n    -\
+          \ model: Ollama中的嵌入模型名称\n\n    返回:\n    - 嵌入向量数组\n    \"\"\"\n    url =\
+          \ \"http://10.191.23.133:11434/api/embed\"\n    # url = \"http://localhost:11434/api/embed\"\
+          \n    headers = {\"Content-Type\": \"application/json\"}\n    payload =\
+          \ {\"model\": model, \"input\": text}\n\n    # try:\n    response = requests.post(url,\
+          \ json=payload, headers=headers, timeout=300)\n    response.raise_for_status()\n\
+          \    result = response.json()\n    # print('result',result)\n    if isinstance(text,\
+          \ list):\n        if \"embeddings\" not in result:\n            raise ValueError(\"\
+          Ollama返回格式异常，缺少'embeddings'字段\")\n        return np.array(result['embeddings'])\n\
+          \    else:\n        if \"embeddings\" not in result:\n            raise\
+          \ ValueError(\"Ollama返回格式异常，缺少'embeddings'字段\")\n        return np.array(result['embeddings'])\n\
+          \    #\n    # except Exception as e:\n    #     print(f\"获取嵌入向量时出错: {e}\"\
+          )\n    #     return None\n    #\n    # except Exception as e:\n    #   \
+          \  print(f\"获取嵌入向量时出错: {e}\")\n    #     return None\n\ndef find_similar_items(items_to_match,\
+          \ valid_items):\n    \"\"\"\n    为多个待匹配项找到最相似的有效项\n\n    参数:\n    - items_to_match:\
+          \ 需要匹配的项列表\n    - valid_items: 有效项列表\n\n    返回:\n    - 字典，键为待匹配项，值为最相似的有效项\n\
+          \    \"\"\"\n    if not items_to_match or not valid_items:\n        return\
+          \ {}\n\n    # 获取所有待匹配项的嵌入向量\n    items_embeddings = get_embedding(items_to_match)\n\
+          \    if items_embeddings is None:\n        return {item: valid_items[0]\
+          \ for item in items_to_match}  # 出错时返回第一个有效项\n\n    # 获取所有有效项的嵌入向量\n   \
+          \ valid_embeddings = get_embedding(valid_items)\n    if valid_embeddings\
+          \ is None:\n        return {item: valid_items[0] for item in items_to_match}\
+          \  # 出错时返回第一个有效项\n\n    # 确保维度正确\n    if items_embeddings.ndim == 1:\n \
+          \       items_embeddings = items_embeddings.reshape(1, -1)\n\n    # 计算相似度矩阵\n\
+          \    similarity_matrix = cosine_similarity(items_embeddings, valid_embeddings)\n\
+          \n    # 为每个待匹配项找到最相似的有效项\n    result = {}\n    for i, item in enumerate(items_to_match):\n\
+          \        most_similar_idx = np.argmax(similarity_matrix[i])\n        result[item]\
+          \ = valid_items[most_similar_idx]\n\n    return result\ndef validate_and_replace_classifications_optimized(data_dict,\
+          \ valid_classifications):\n    \"\"\"\n    优化版本：验证并替换数据字典中的分类名称\n    检查所有的columnClassifications和tableClassifications，把所有不符合的都替换掉\n\
+          \n    参数:\n    - data_dict: 符合JSON Schema的数据字典\n    - valid_classifications:\
+          \ 有效的分类名称列表\n\n    返回:\n    - 处理后的数据字典\n    \"\"\"\n    if not isinstance(data_dict,\
+          \ dict):\n        raise ValueError(\"输入的数据必须是字典类型\")\n\n    if \"columnInfoList\"\
+          \ not in data_dict:\n        raise ValueError(\"输入数据缺少'columnInfoList'字段\"\
+          )\n    message=''\n    # 收集所有需要替换的分类\n    invalid_classifications = []\n\
+          \    replacement_needed = False  # 跟踪是否需要进行替换\n\n    # 检查表分类\n    table_class_invalid\
+          \ = False\n    if \"tableClassifications\" in data_dict and data_dict[\"\
+          tableClassifications\"]:\n        table_class = data_dict[\"tableClassifications\"\
+          ]\n        if table_class not in valid_classifications:\n            invalid_classifications.append(table_class)\n\
+          \            table_class_invalid = True\n            replacement_needed\
+          \ = True\n            print(f\"表分类'{table_class}'不在有效列表中，将查找最相似的替代项\")\n\
+          \            message = message+f\"表分类'{table_class}'不在有效列表中，将查找最相似的替代项\"\
+          \n    # 检查列分类\n    column_class_invalid = []\n    for i, column_info in\
+          \ enumerate(data_dict[\"columnInfoList\"]):\n        if \"columnClassifications\"\
+          \ in column_info and column_info[\"columnClassifications\"]:\n         \
+          \   col_class = column_info[\"columnClassifications\"]\n            if col_class\
+          \ not in valid_classifications:\n                if col_class not in invalid_classifications:\
+          \  # 避免重复查找相似项\n                    invalid_classifications.append(col_class)\n\
+          \                column_class_invalid.append((i, col_class))\n         \
+          \       replacement_needed = True\n                print(f\"列'{column_info.get('columnName',\
+          \ f'索引{i}')}' 的分类 '{col_class}' 不在有效列表中，将查找最相似的替代项\")\n                message=\
+          \ message+f\"列'{column_info.get('columnName', f'索引{i}')}' 的分类 '{col_class}'\
+          \ 不在有效列表中，将查找最相似的替代项\"\n    # 如果不需要替换，直接返回\n    if not replacement_needed:\n\
+          \        print(\"所有分类均有效，无需替换\")\n        message= message+\"所有分类均有效，无需替换\"\
+          \n        return data_dict,message\n\n    # 一次性获取所有无效分类的相似项\n    similar_items\
+          \ = find_similar_items(invalid_classifications, valid_classifications)\n\
+          \n    # 替换表分类\n    if table_class_invalid:\n        original_class = data_dict[\"\
+          tableClassifications\"]\n        data_dict[\"tableClassifications\"] = similar_items.get(original_class,\
+          \ valid_classifications[0])\n        print(f\"已将表分类'{original_class}'替换为'{data_dict['tableClassifications']}'\"\
+          )\n        message= message+f\"已将表分类'{original_class}'替换为'{data_dict['tableClassifications']}'\"\
+          \n    # 替换列分类\n    for idx, original_class in column_class_invalid:\n  \
+          \      similar_class = similar_items.get(original_class, valid_classifications[0])\n\
+          \        data_dict[\"columnInfoList\"][idx][\"columnClassifications\"] =\
+          \ similar_class\n        column_name = data_dict[\"columnInfoList\"][idx].get('columnName',\
+          \ f'索引{idx}')\n        print(f\"已将列'{column_name}'的分类'{original_class}'替换为'{similar_class}'\"\
+          )\n        message= message+f\"已将列'{column_name}'的分类'{original_class}'替换为'{similar_class}'\"\
+          \n\n    # 打印总结信息\n    print(f\"检查完成: 发现 {len(invalid_classifications)} 个无效分类，已全部替换为有效分类\"\
+          )\n    message= message+f\"检查完成: 发现 {len(invalid_classifications)} 个无效分类，已全部替换为有效分类\"\
+          \n\n    return data_dict,message\n\ndef dict_to_json_string(obj):\n    \"\
+          \"\"\n    将字典转换为JSON字符串，确保布尔值不带引号，且使用双引号表示字符串\n    \"\"\"\n    # 首先转换为JSON字符串\n\
+          \    json_str = json.dumps(obj, ensure_ascii=False)\n\n    # 将 \"true\"\
+          \ 和 \"false\" 替换为不带引号的 true 和 false\n    json_str = json_str.replace('\"\
+          true\"', 'true').replace('\"false\"', 'false')\n\n    return json_str\n\n\
+          \ndef wrap_classifications_in_list(data_dict):\n    \"\"\"\n    将字典中的所有\
+          \ tableClassifications 和 columnClassifications 值转换为列表形式\n\n    参数:\n   \
+          \ - data_dict: 包含分类信息的字典\n\n    返回:\n    - 处理后的字典\n    \"\"\"\n    # 复制字典以避免修改原始数据\n\
+          \    result_dict = data_dict.copy()\n\n    # 处理表级分类\n    if \"tableClassifications\"\
+          \ in result_dict:\n        # 如果分类值本身不是列表，则将其转换为列表\n        if not isinstance(result_dict[\"\
+          tableClassifications\"], list):\n            result_dict[\"tableClassifications\"\
+          ] = [result_dict[\"tableClassifications\"]]\n\n    # 处理每个列的分类\n    if \"\
+          columnInfoList\" in result_dict and isinstance(result_dict[\"columnInfoList\"\
+          ], list):\n        for column_info in result_dict[\"columnInfoList\"]:\n\
+          \            if isinstance(column_info, dict) and \"columnClassifications\"\
+          \ in column_info:\n                # 如果分类值本身不是列表，则将其转换为列表\n            \
+          \    if not isinstance(column_info[\"columnClassifications\"], list):\n\
+          \                    column_info[\"columnClassifications\"] = [column_info[\"\
+          columnClassifications\"]]\n\n    return result_dict\n\n\ndef main(result_ori:\
+          \ str,category:str)-> dict:\n    # 示例有效分类列表\n    valid_classifications =\
+          \ eval(category)\n    output_dict = extract_dict_from_string(result_ori)\n\
+          \    result,message = validate_and_replace_classifications_optimized(output_dict,\
+          \ valid_classifications)\n    # 将所有分类值套上方括号\n    result_wrap = wrap_classifications_in_list(result)\n\
+          \    #使用自定义函数转换字典为字符串\n    output_json = dict_to_json_string(result_wrap)\n\
+          \n    return {\"output\":output_json,\"message\":message}"
+        code_language: python3
+        desc: ''
+        outputs:
+          message:
+            children: null
+            type: string
+          output:
+            children: null
+            type: string
+        selected: false
+        title: 类别检查
+        type: code
+        variables:
+        - value_selector:
+          - '1753066157276'
+          - output
+          variable: result_ori
+        - value_selector:
+          - '1752826684738'
+          - category
+          variable: category
+      height: 52
+      id: '1753169712926'
+      position:
+        x: 3081.8906914256077
+        y: 276.048324194428
+      positionAbsolute:
+        x: 3081.8906914256077
+        y: 276.048324194428
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: 分支1-模板转换
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1757577993335'
+          - result
+          variable: arg1
+      height: 52
+      id: '1753258014868'
+      position:
+        x: 2132.6666666666665
+        y: 283
+      positionAbsolute:
+        x: 2132.6666666666665
+        y: 283
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import json\n\ndef replace_reasoning_strings(json_string, targets_to_remove):\n\
+          \    \"\"\"\n    替换JSON中columnReasoning和tableReasoning字段中包含的特定目标字符串\n  \
+          \  \n    参数:\n    json_string (str): 符合指定jsonschema的JSON字符串\n    targets_to_remove\
+          \ (list): 需要被移除的目标字符串列表\n    \n    返回:\n    tuple: (替换后的JSON字符串, 替换信息字典)\n\
+          \    \"\"\"\n    try:\n        # 初始化替换信息\n        replacement_info = {\n\
+          \            'table_replaced': False,\n            'table_targets_found':\
+          \ [],\n            'columns_replaced': 0,\n            'column_targets_found':\
+          \ []\n        }\n        \n        # 将JSON字符串解析为Python对象\n        data =\
+          \ json.loads(json_string)\n        \n        # 处理tableReasoning字段\n    \
+          \    if \"tableReasoning\" in data:\n            current_table_reasoning\
+          \ = data[\"tableReasoning\"]\n            for target in targets_to_remove:\n\
+          \                if target in current_table_reasoning:\n               \
+          \     replacement_info['table_replaced'] = True\n                    replacement_info['table_targets_found'].append(target)\n\
+          \                    current_table_reasoning = current_table_reasoning.replace(target,\
+          \ \"\")\n            data[\"tableReasoning\"] = current_table_reasoning\n\
+          \        \n        # 处理columnInfoList中的columnReasoning字段\n        if \"\
+          columnInfoList\" in data and isinstance(data[\"columnInfoList\"], list):\n\
+          \            for column_info in data[\"columnInfoList\"]:\n            \
+          \    if \"columnReasoning\" in column_info:\n                    current_column_reasoning\
+          \ = column_info[\"columnReasoning\"]\n                    column_replaced\
+          \ = False\n                    for target in targets_to_remove:\n      \
+          \                  if target in current_column_reasoning:\n            \
+          \                if target not in replacement_info['column_targets_found']:\n\
+          \                                replacement_info['column_targets_found'].append(target)\n\
+          \                            column_replaced = True\n                  \
+          \          current_column_reasoning = current_column_reasoning.replace(target,\
+          \ \"\")\n                    if column_replaced:\n                     \
+          \   replacement_info['columns_replaced'] += 1\n                    column_info[\"\
+          columnReasoning\"] = current_column_reasoning\n                    \n  \
+          \      # 将处理后的Python对象转换回JSON字符串\n        return json.dumps(data, ensure_ascii=False),\
+          \ replacement_info\n    \n    except json.JSONDecodeError:\n        raise\
+          \ ValueError(\"提供的字符串不是有效的JSON格式\")\n    except Exception as e:\n      \
+          \  raise Exception(f\"处理JSON时发生错误: {str(e)}\")\n\ndef main(json_string:\
+          \ str) -> dict:\n    \"\"\"\n    主函数：处理JSON字符串并提供结果与消息\n    \n    参数:\n\
+          \    json_string (str): 要处理的JSON字符串\n    \n    返回:\n    dict: 包含处理结果和消息的字典\n\
+          \    \"\"\"\n    # 要替换的目标字符串列表\n    targets = [\"{目标类别}\", \"{字段用途}\", \"\
+          {数据敏感性}\", \"{安全级别}\", \"{泄露后果}\"]\n    \n    try:\n        result, replacement_info\
+          \ = replace_reasoning_strings(json_string, targets)\n        \n        #\
+          \ 生成消息\n        if (not replacement_info['table_replaced'] and \n      \
+          \      replacement_info['columns_replaced'] == 0):\n            message\
+          \ = \"未发现需要替换的目标字符串，JSON保持不变。\"\n        else:\n            message_parts\
+          \ = []\n            \n            # 表级别替换信息\n            if replacement_info['table_replaced']:\n\
+          \                found_targets = \"、\".join(replacement_info['table_targets_found'])\n\
+          \                message_parts.append(f\"已在表描述中替换以下目标字符串: {found_targets}\"\
+          )\n                \n            # 列级别替换信息\n            if replacement_info['columns_replaced']\
+          \ > 0:\n                found_targets = \"、\".join(replacement_info['column_targets_found'])\n\
+          \                message_parts.append(f\"已在{replacement_info['columns_replaced']}个列描述中替换以下目标字符串:\
+          \ {found_targets}\")\n                \n            message = \"；\".join(message_parts)\
+          \ + \"。\"\n        output = \"```json\\n\" +result + \"\\n```\"\n\n    \
+          \    return {'result': output, 'message': message}\n    \n    except ValueError\
+          \ as e:\n        output = \"```json\\n\" +json_string + \"\\n```\"\n   \
+          \     return {\n            'result': output,\n            'message': f\"\
+          处理失败: {str(e)}\"\n        }\n    except Exception as e:\n        output\
+          \ = \"```json\\n\" +json_string + \"\\n```\"\n        return {\n       \
+          \     'result': output,\n            'message': f\"处理过程中发生错误: {str(e)}\"\
+          \n        }\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          message:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 推理逻辑检查
+        type: code
+        variables:
+        - value_selector:
+          - '1753169712926'
+          - output
+          variable: json_string
+      height: 52
+      id: '1754035680218'
+      position:
+        x: 3419.191782239361
+        y: 269.6666666666667
+      positionAbsolute:
+        x: 3419.191782239361
+        y: 269.6666666666667
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "def main(inputs: dict) -> dict:\n    import json\n\n    x = inputs\n\
+          \n    # 若上游是 JSON 字符串，先尝试解析\n    if isinstance(x, str):\n        try:\n\
+          \            x = json.loads(x)\n        except Exception:\n            pass\
+          \  # 不是 JSON 就保持原样字符串\n\n    # 最简规则：list -> 取第二个元素；dict -> 原样；否则 {}\n  \
+          \  if isinstance(x, list):\n        x = x[1] if len(x) > 1 else {}\n   \
+          \ elif isinstance(x, dict):\n        pass\n    else:\n        x = {}\n\n\
+          \    # 按需转成字符串；dict/list -> JSON 文本（保留中文不转义）\n    if isinstance(x, (dict,\
+          \ list)):\n        s = json.dumps(x, ensure_ascii=False)\n    else:\n  \
+          \      s = \"\" if x is None else str(x)\n\n    return {\"result\": s}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 结构化输出
+        type: code
+        variables:
+        - value_selector:
+          - llm
+          - structured_output
+          variable: inputs
+      height: 52
+      id: '1757577993335'
+      position:
+        x: 1251.515157473824
+        y: 352.09488371866547
+      positionAbsolute:
+        x: 1251.515157473824
+        y: 352.09488371866547
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -277.59948707122476
+      y: 76.78240934403993
+      zoom: 1.5552860557364365
