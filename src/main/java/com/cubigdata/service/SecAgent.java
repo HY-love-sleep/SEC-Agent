@@ -36,6 +36,7 @@ public class SecAgent {
                 .name("colt_agent")
                 .model(chatModel)
                 .description("处理采集程序服务相关的业务流程")
+                .inputKey("input")
                 .instruction("""
                         你是数据采集专家， 负责处理用户对采集程序服务的相关请求， 并调用对应工具进行处理。
                         你需要：
@@ -44,7 +45,7 @@ public class SecAgent {
                         3. 根据上一步得到的CollectTaskId， 开启采集任务， 调用-openCollectionTask；
                         4. 采集任务开启后， 根据CollectTaskId， 执行采集任务， 调用-executeCollectionTask；
                         5. 采集任务完成后， 返回dbName供分类, 注意， 这里的dbName从用户输入中获取， 只返回dbName!
-                        
+
                         重要提示：
                         - executeCollectionTask会立即返回200， 但是采集任务会在后台跑；
                         - 你可以等待10S后再返回dbName
@@ -66,7 +67,7 @@ public class SecAgent {
                         1. 对元数据列表进行全量查询， 根据dbName筛选出对应的dbId， 调用-getMetaDataAllList;
                         2. 得到dbId后， 对这个数据库进行分类分级打标， 调用-executeClassifyLevel；
                         3. 打标完成后，根据dbName和tbName, 查询分类分级结果， 调用-getClassifyLevelResult；
-                        
+
                         重要提示：
                         - executeClassifyLevel会立即返回200， 但是采集任务会在后台跑；
                         - 你需要等待15s后再去查询分类分级结果； 或者重复调用getClassifyLevelResult， 直到返回结果！
@@ -82,8 +83,8 @@ public class SecAgent {
                 .name("sec_agent")
                 .state(stateFactory)
                 .description("数据安全分类分级安全助手")
-                .inputKey("input")
-                .outputKey("clft_res")
+//                .inputKey("input")
+//                .outputKey("clft_res")
                 .subAgents(List.of(coltAgent, clftAgent))
                 .build();
 

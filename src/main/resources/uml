@@ -1,0 +1,21 @@
+@startuml parallel_translator_and_expander_flow
+skinparam usecaseFontSize 14
+skinparam usecaseStereotypeFontSize 12
+skinparam hexagonFontSize 14
+skinparam hexagonStereotypeFontSize 12
+title "parallel translator and expander flow"
+footer
+
+powered by spring-ai-alibaba
+end footer
+circle start<<input>> as __START__
+circle stop as __END__
+usecase "similarityMatch"<<Node>>
+usecase "knowledgeRetrieval"<<Node>>
+usecase "classification"<<Node>>
+"__START__" -down-> "similarityMatch"
+"__START__" -down-> "knowledgeRetrieval"
+"similarityMatch" -down-> "classification"
+"knowledgeRetrieval" -down-> "classification"
+"classification" -down-> "__END__"
+@enduml

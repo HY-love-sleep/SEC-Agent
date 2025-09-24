@@ -22,14 +22,14 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sec")
-public class SecController {
+public class AgentController {
     private final SyncMcpToolCallbackProvider toolCallbackProvider;
 
     private final ChatModel chatModel;
 
     private final SecAgent agent;
 
-    public SecController(SyncMcpToolCallbackProvider toolCallbackProvider, ChatModel chatModel, SecAgent agent) {
+    public AgentController(SyncMcpToolCallbackProvider toolCallbackProvider, ChatModel chatModel, SecAgent agent) {
         this.toolCallbackProvider = toolCallbackProvider;
         DashScopeApi dashScopeApi = DashScopeApi.builder().apiKey(System.getenv("AI_DASHSCOPE_API_KEY")).build();
         this.chatModel = DashScopeChatModel.builder().dashScopeApi(dashScopeApi).build();
