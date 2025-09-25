@@ -1,8 +1,11 @@
 package com.cubigdata.config;
 
 import com.alibaba.cloud.ai.graph.node.KnowledgeRetrievalNode;
+import com.cubigdata.workflow.nodes.CategoryValidationNode;
 import com.cubigdata.workflow.nodes.ClassificationLLMNode;
 import com.cubigdata.workflow.nodes.SimilarityMatchNode;
+import com.cubigdata.workflow.nodes.StructuredValidationNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,12 @@ import java.util.Objects;
 @Configuration
 @Slf4j
 public class NodeConfig {
+    private final ObjectMapper objectMapper;
+
+    public NodeConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
 
     /**
      * KnowledgeRetrievalNode 节点配置
@@ -49,7 +58,7 @@ public class NodeConfig {
                     try {
                         ssl.sslContext(
                                 SslContextBuilder.forClient()
-                                        .trustManager(InsecureTrustManagerFactory.INSTANCE).build() // 信任所有证书
+                                        .trustManager(InsecureTrustManagerFactory.INSTANCE).build()
                         );
                     } catch (SSLException e) {
                         throw new RuntimeException(e);
@@ -85,6 +94,22 @@ public class NodeConfig {
                 "llmResult",
                 promptTemplate
         );
+    }
+
+    /**
+     * 类别验证节点
+     */
+    @Bean
+    public CategoryValidationNode categoryValidationNode() {
+        return new CategoryValidationNode(objectMapper);
+    }
+
+    /**
+     * LLM返回结果， 结构验证节点
+     */
+    @Bean
+    public StructuredValidationNode structuredValidationNode() {
+        return new StructuredValidationNode(objectMapper);
     }
 
 
