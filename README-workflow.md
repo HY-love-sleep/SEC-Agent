@@ -8,14 +8,14 @@
    - 输入参数：`query`（表及字段信息），`category`（目标类别列表）。
 2. **知识增强（知识检索节点）**
    - 根据 `query` 从知识库检索相关规范/分类规则，作为大模型推理的上下文。
-3. **初步分类分级（LLM 节点）**
+3. **相似度匹配（Code 节点）**
+   - 调用外部接口，对输入 query 与历史/参考分类做相似度匹配，补充或修正。
+4. **初步分类分级（LLM 节点）**
    - 调用大模型（gpt-oss-120b），输出结构化 JSON：
      - 字段级（类别、级别、推理逻辑、置信度、模型标识）
      - 表级（类别、级别、推理逻辑、置信度、模型标识）
-4. **第一轮输出（Answer 节点）**
+5. **第一轮输出（Answer 节点）**
    - 将 LLM 输出作为初步答案。
-5. **相似度匹配（Code 节点）**
-   - 调用外部接口，对输入 query 与历史/参考分类做相似度匹配，补充或修正。
 6. **结构化检查（Code 节点）**
    - 检查 LLM 输出是否满足 JSON Schema 要求：
      - 必需字段是否存在（columnName, columnLevel 等）
@@ -85,9 +85,10 @@ flowchart TD
 
 - **大模型分类分级（LLM）** → 这是核心任务。
 - **知识检索** → 用于保证分类/分级有依据。
+- **相似度匹配** → 用于对历史结果进行召回。
 - **结构化校验** → 确保输出符合 schema，避免脏数据。
 - **类别有效性检查** → 保证所有分类都在合法枚举集合中。
-- **推理逻辑清理** → 去掉模板占位符，保证结果可读可用。
+- ~~**推理逻辑清理** → 去掉模板占位符，保证结果可读可用。~~
 
 可简化逻辑（可合并）
 
@@ -97,7 +98,7 @@ flowchart TD
 - **多次模板转换/变量聚合**
   - Dify 工作流需要节点化，Spring AI/ADK 中可以在一段代码里完成（拼接/格式化/聚合）。
 - **相似度匹配外部接口**
-  - 如果你的 `category` 已经固定，可以直接在 ADK 内部做 embedding 近邻替换，不需要额外 HTTP 调用。
+  - 如果 `category` 已经固定，可以直接在 ADK 内部做 embedding 近邻替换，不需要额外 HTTP 调用。
 
 
 
@@ -121,12 +122,22 @@ circle stop as __END__
 usecase "similarityMatch"<<Node>>
 usecase "knowledgeRetrieval"<<Node>>
 usecase "classification"<<Node>>
+usecase "categoryValidation"<<Node>>
+usecase "structuredValidation"<<Node>>
+hexagon "check state" as condition1<<Condition>>
 "__START__" -down-> "similarityMatch"
 "__START__" -down-> "knowledgeRetrieval"
 "similarityMatch" -down-> "classification"
 "knowledgeRetrieval" -down-> "classification"
-"classification" -down-> "__END__"
+"classification" -down-> "structuredValidation"
+"structuredValidation" .down.> "condition1"
+"condition1" .down.> "categoryValidation": "yes"
+'"structuredValidation" .down.> "categoryValidation": "yes"
+"condition1" .down.> "classification": "no"
+'"structuredValidation" .down.> "classification": "no"
+"categoryValidation" -down-> "__END__"
 @enduml
+
 ```
 
 133相似度匹配接口
@@ -272,10 +283,25 @@ curl --location --request POST 'http://10.191.23.133:8899/match' \
 
 1. 模型替换为maas；
 
-2. 新增格式化校验节点
+2. ~~新增格式化校验节点【done】~~
 
-   目前在提示词里有输出格式规范了， 经测试， 输出内容也符合格式要求；
+   ~~目前在提示词里有输出格式规范了， 经测试， 输出内容也符合格式要求；~~
 
-   后续可加一个代码强校验， 更保险；
+   ~~后续可加一个代码强校验， 更保险；~~
 
-3. 目前的rag基于内存存储，需要对接milvus， 以及目前的知识库文档是我自己清洗的， 需要改为丝雨、英杰提供的文档
+3. 目前的**rag**基于内存存储，需要对接milvus， 以及目前的**知识库文档**是我自己清洗的， 需要改为丝雨、英杰提供的文档;
+
+4. 需进行集成验证【将本服务Docker部署到开发环境， 替换dify工作流进行流程集成， 需考虑开发环境与mass的连通性】；
+
+5. 流程优化
+
+   - 目前提示词太过冗余/复杂, 影响模型的输出效率， 需改进prompt；
+
+   - 相似度匹配节点可改为another rag节点， 省掉http调用以及python服务的部署；
+
+   - 目前来看qwen-max的输出已经是结构化/类别正确的结果， 不需要scheme验证和类别验证节点， 可以考虑简化流程， 但不确定mass平台的模型效果；
+
+     流程需和模型绑定测试；
+
+   
+

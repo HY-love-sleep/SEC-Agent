@@ -1,9 +1,9 @@
-@startuml parallel_translator_and_expander_flow
+@startuml ClassifyLevel_UML_Flow
 skinparam usecaseFontSize 14
 skinparam usecaseStereotypeFontSize 12
 skinparam hexagonFontSize 14
 skinparam hexagonStereotypeFontSize 12
-title "parallel translator and expander flow"
+title "ClassifyLevel UML Flow"
 footer
 
 powered by spring-ai-alibaba
@@ -13,9 +13,18 @@ circle stop as __END__
 usecase "similarityMatch"<<Node>>
 usecase "knowledgeRetrieval"<<Node>>
 usecase "classification"<<Node>>
+usecase "categoryValidation"<<Node>>
+usecase "structuredValidation"<<Node>>
+hexagon "check state" as condition1<<Condition>>
 "__START__" -down-> "similarityMatch"
 "__START__" -down-> "knowledgeRetrieval"
 "similarityMatch" -down-> "classification"
 "knowledgeRetrieval" -down-> "classification"
-"classification" -down-> "__END__"
+"classification" -down-> "structuredValidation"
+"structuredValidation" .down.> "condition1"
+"condition1" .down.> "classification": "no"
+'"structuredValidation" .down.> "classification": "no"
+"condition1" .down.> "categoryValidation": "yes"
+'"structuredValidation" .down.> "categoryValidation": "yes"
+"categoryValidation" -down-> "__END__"
 @enduml

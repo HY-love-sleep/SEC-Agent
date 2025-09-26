@@ -49,7 +49,7 @@ public class NodeConfig {
 
 
     /**
-     * HttpNode 节点配置
+     * 相似度匹配节点配置
      */
     @Bean("similarityMatchNode")
     public SimilarityMatchNode similarityMatchNode() throws SSLException {

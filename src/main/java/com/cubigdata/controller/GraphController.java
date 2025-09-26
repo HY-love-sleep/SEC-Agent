@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author yHong
@@ -38,8 +40,20 @@ public class GraphController {
         this.compiledGraph = stateGraph.compile();
     }
 
-    @PostMapping(value = "/chat", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<String>> simpleChat(@RequestBody Map<String, Object> body,
+    @PostMapping(value = "/call", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity simpleChat(@RequestBody Map<String, Object> body,
+                                     @RequestParam(value = "thread_id", defaultValue = "yhong", required = false) String threadId) throws Exception {
+        RunnableConfig runnableConfig = RunnableConfig.builder().threadId(threadId).build();
+        Map<String, Object> query = (Map<String, Object>) body.get("query");
+        String queryStr = objectMapper.writeValueAsString(query);
+        Object category = body.get("category");
+        Optional<OverAllState> res = compiledGraph.call(Map.of("query", queryStr, "category", category), runnableConfig);
+        Optional<Object> correctedResult = res.flatMap(overAllState -> overAllState.value("corrected_result"));
+        return ResponseEntity.ok(correctedResult.orElse("no result"));
+    }
+
+    @PostMapping(value = "/flux", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<String>> fluxChat(@RequestBody Map<String, Object> body,
                                                     @RequestParam(value = "thread_id", defaultValue = "yhong", required = false) String threadId) throws Exception {
         RunnableConfig runnableConfig = RunnableConfig.builder().threadId(threadId).build();
         Map<String,Object> query = (Map<String,Object>) body.get("query");

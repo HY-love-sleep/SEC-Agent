@@ -25,8 +25,8 @@ public class SimilarityMatchNode implements NodeAction {
     @Override
     public Map<String, Object> apply(OverAllState state) throws ExecutionException, InterruptedException {
 
+        log.info("开始进行相似度匹配搜索...");
         String queryStr = state.value("query").orElse("").toString();
-        log.info("接收到的query字符串: {}", queryStr);
 
         Map<String, Object> inputs = new HashMap<>();
         inputs.put("query", queryStr);
@@ -35,8 +35,6 @@ public class SimilarityMatchNode implements NodeAction {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("inputs", inputs);
-
-        log.info("最终请求体: {}", WebClientUtils.toJsonString(requestBody));
 
         CompletableFuture<Map> future = webClient.post()
                 .uri(url)
@@ -48,18 +46,7 @@ public class SimilarityMatchNode implements NodeAction {
 
         Map<String, Object> updated = new HashMap<>();
         updated.put("similarityMatchResult", future.get());
+        log.info("相似度搜索完成！");
         return updated;
-    }
-
-    static class WebClientUtils {
-        private static final com.fasterxml.jackson.databind.ObjectMapper MAPPER = new com.fasterxml.jackson.databind.ObjectMapper();
-
-        public static String toJsonString(Object obj) {
-            try {
-                return MAPPER.writeValueAsString(obj);
-            } catch (Exception e) {
-                throw new RuntimeException("serialize failed", e);
-            }
-        }
     }
 }

@@ -78,7 +78,7 @@ public class ClftGraph {
                 .addConditionalEdges("structuredValidation",  AsyncEdgeAction.edge_async(new StructuredValidationDispatcher()), Map.of("yes", "categoryValidation", "no", "classification"))
                 .addEdge("categoryValidation", END);
         GraphRepresentation representation = stateGraph.getGraph(GraphRepresentation.Type.PLANTUML,
-                "parallel translator and expander flow");
+                "ClassifyLevel UML Flow");
         log.info("\n=== ClassifyLevel UML Flow ===");
         log.info(representation.content());
         log.info("==================================\n");

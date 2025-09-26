@@ -3,6 +3,7 @@ package com.cubigdata.workflow.nodes;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -12,6 +13,7 @@ import org.springframework.ai.vectorstore.VectorStore;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class ClassificationLLMNode implements NodeAction {
 
     private final ChatClient chatClient;
@@ -55,6 +57,7 @@ public class ClassificationLLMNode implements NodeAction {
 
     @Override
     public Map<String, Object> apply(OverAllState state) throws Exception {
+        log.info("开始进行分类分级打标...");
         String query = mapper.writeValueAsString(state.value(queryKey).orElse(""));
         String category = mapper.writeValueAsString(state.value(categoryKey).orElse(""));
         String retrievedDocs = mapper.writeValueAsString(state.value(docsKey).orElse(""));
@@ -65,6 +68,11 @@ public class ClassificationLLMNode implements NodeAction {
                 .replace("{{#1752826684738.query#}}", query)
                 .replace("{{#1752826684738.category#}}", category)
                 .replace("{{#context#}}", retrievedDocs + "\n" + simMatch);
+
+        log.info("dbInfo:{}", query);
+        log.info("categary:{}", category);
+        log.info("retrievedDocs:{}", retrievedDocs);
+        log.info("simMatch:{}", simMatch);
 
         ChatResponse response = chatClient.prompt(finalPrompt)
                 .options(ChatOptions.builder()
@@ -90,6 +98,7 @@ public class ClassificationLLMNode implements NodeAction {
 
         Map<String, Object> updated = new HashMap<>();
         updated.put(outputKey, result);
+        log.info("分类分级打标完成！");
         return updated;
     }
 
