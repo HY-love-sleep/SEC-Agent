@@ -305,3 +305,39 @@ curl --location --request POST 'http://10.191.23.133:8899/match' \
 
    
 
+
+
+## 3. docker
+
+1. 在Dockerfile目录下
+
+   ```
+    docker build -t sec-agent:1.0 .
+   ```
+
+2. 保存镜像为tar包
+
+   ```
+   docker save -o sec-agent_1.0.tar sec-agent:1.0
+   ```
+
+3. 将镜像包放到服务器上
+
+   ```
+   docker load -i /opt/sec-agent/sec-agent_1.0.tar
+   ```
+
+4. 启动
+
+   这里挂载里resource下的所有文件
+
+   ```
+   docker run -d \
+     --name sec-agent \
+     -p 8080:8080 \
+     -v /opt/sec-agent/resources:/app/resources \
+     sec-agent:1.0
+   
+   ```
+
+   
