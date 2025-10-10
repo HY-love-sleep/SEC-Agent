@@ -36,7 +36,7 @@ public class Application {
             @Qualifier("classificationVectorStore") VectorStore classificationVectorStore
     ) {
         return args -> {
-            log.info("🔄 正在向量化加载分类分级知识库...");
+            log.info("🔄 正在向量化加载分类分级知识库, EmbeddingModel:{}", embeddingModel.getClass().getName());
             var chunks = new TokenTextSplitter().transform(new TextReader(ragSource).read());
             classificationVectorStore.write(chunks);
 

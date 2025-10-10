@@ -12,12 +12,26 @@ spring:
   ai:
     dashscope:
       api-key: ${AI_DASHSCOPE_API_KEY}
+      embedding:
+        enabled: false
       chat:
         options:
           model: qwen-max
+    openai:
+      base-url: https://maas-api.ai-yuanjing.com/openapi/compatible-mode
+      api-key: ${AI_MAAS_API_KEY}
+      embeddings-path: /embeddings
+      chat:
+        options:
+          model: gpt-oss-120b
+          stream: false
+      embedding:
+        enabled: true
+        options:
+          model: qwen3-embed-0.6b
     mcp:
       client:
-        enabled: true
+        enabled: false
         request-timeout: 50000
         name: clft-agent-client
         toolcallback:

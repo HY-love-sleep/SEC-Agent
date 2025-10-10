@@ -6,6 +6,7 @@ import com.alibaba.cloud.ai.graph.CompiledGraph;
 import com.cubigdata.service.SecAgent;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sec")
+@ConditionalOnProperty(prefix = "spring.ai.mcp.client", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class AgentController {
     private final SyncMcpToolCallbackProvider toolCallbackProvider;
 
