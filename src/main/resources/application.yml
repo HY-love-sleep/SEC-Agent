@@ -29,20 +29,20 @@ spring:
         enabled: true
         options:
           model: qwen3-embed-0.6b
-    mcp:
-      client:
-        enabled: false
-        request-timeout: 50000
-        name: clft-agent-client
-        toolcallback:
-          enabled: true
-        sse:
-          connections:
-            clft-agent-client:
-              url: http://172.16.22.18:8081/mcp/sec-classify-level/
-            colt-agent-client:
-              url: http://172.16.22.18:8081/mcp/sec-collector-management/
-        version: 1.0.0
+#    mcp:
+#      client:
+#        enabled: false
+#        request-timeout: 50000
+#        name: clft-agent-client
+#        toolcallback:
+#          enabled: true
+#        sse:
+#          connections:
+#            clft-agent-client:
+#              url: http://172.16.22.18:8081/mcp/sec-classify-level/
+#            colt-agent-client:
+#              url: http://172.16.22.18:8081/mcp/sec-collector-management/
+#        version: 1.0.0
   mandatory-file-encoding: UTF-8
 
 logging:

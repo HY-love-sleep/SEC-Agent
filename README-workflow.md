@@ -333,10 +333,12 @@ curl --location --request POST 'http://10.191.23.133:8899/match' \
 
    ```
    docker run -d \
-     --name sec-agent \
-     -p 8080:8080 \
-     -v /opt/sec-agent/resources:/app/resources \
-     sec-agent:1.0
+    --name sec-agent \
+    -p 8888:8888 \
+    -v /opt/sec-agent/resources:/app/resources \
+    -e SPRING_CONFIG_LOCATION=file:/app/resources/application.yml \
+    -e AI_MAAS_API_KEY=sk-xx \
+    sec-agent:1.0
    
    ```
 
