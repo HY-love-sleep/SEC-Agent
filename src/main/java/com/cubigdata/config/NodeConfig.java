@@ -1,8 +1,10 @@
 package com.cubigdata.config;
 
 import com.alibaba.cloud.ai.graph.node.KnowledgeRetrievalNode;
+import com.cubigdata.service.RagDataService;
 import com.cubigdata.workflow.nodes.CategoryValidationNode;
 import com.cubigdata.workflow.nodes.ClassificationLLMNode;
+import com.cubigdata.workflow.nodes.EnhancedRetrievalNode;
 import com.cubigdata.workflow.nodes.SimilarityMatchNode;
 import com.cubigdata.workflow.nodes.StructuredValidationNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,7 +83,7 @@ public class NodeConfig {
                                                        @Qualifier("classificationVectorStore") VectorStore classificationVectorStore) throws IOException {
         String promptTemplate = new String(
                 Objects.requireNonNull(
-                        this.getClass().getResourceAsStream("/classification_prompt.txt")
+                        this.getClass().getResourceAsStream("/prompt/classification_prompt.txt")
                 ).readAllBytes(), StandardCharsets.UTF_8);
 
         return new ClassificationLLMNode(
@@ -112,5 +114,23 @@ public class NodeConfig {
         return new StructuredValidationNode(objectMapper);
     }
 
+    /**
+     * 增强型检索节点（多模融合检索）
+     * 结合关键词、正则、向量多种检索方式
+     */
+    @Bean("enhancedRetrievalNode")
+    public EnhancedRetrievalNode enhancedRetrievalNode(
+            @Qualifier("classificationVectorStore") VectorStore classificationVectorStore,
+            RagDataService ragDataService) {
+        return new EnhancedRetrievalNode(
+            classificationVectorStore,
+            ragDataService,
+            objectMapper,
+            "query",
+            "retrievedDocs",
+            5,    // vectorTopK: 向量检索返回前5个结果
+            0.5   // vectorThreshold: 相似度阈值0.5
+        );
+    }
 
 }

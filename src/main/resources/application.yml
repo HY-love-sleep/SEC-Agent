@@ -45,6 +45,10 @@ spring:
 #        version: 1.0.0
   mandatory-file-encoding: UTF-8
 
+# RAG 数据源配置
+rag:
+  source: classpath:rag/rag_new.txt  # 使用新的结构化RAG格式
+
 logging:
   level:
     io:

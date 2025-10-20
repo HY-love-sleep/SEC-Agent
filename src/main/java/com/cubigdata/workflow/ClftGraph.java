@@ -11,6 +11,7 @@ import com.alibaba.cloud.ai.graph.state.strategy.ReplaceStrategy;
 import com.cubigdata.workflow.dispatcher.StructuredValidationDispatcher;
 import com.cubigdata.workflow.nodes.CategoryValidationNode;
 import com.cubigdata.workflow.nodes.ClassificationLLMNode;
+import com.cubigdata.workflow.nodes.EnhancedRetrievalNode;
 import com.cubigdata.workflow.nodes.SimilarityMatchNode;
 import com.cubigdata.workflow.nodes.StructuredValidationNode;
 import lombok.extern.slf4j.Slf4j;
@@ -38,13 +39,20 @@ public class ClftGraph {
     private final ClassificationLLMNode classificationLLMNode;
     private final SimilarityMatchNode similarityMatchNode;
     private final KnowledgeRetrievalNode knowledgeRetrievalNode;
+    private final EnhancedRetrievalNode enhancedRetrievalNode;
     private final CategoryValidationNode categoryValidationNode;
     private final StructuredValidationNode structuredValidationNode;
 
-    public ClftGraph(ClassificationLLMNode classificationLLMNode, SimilarityMatchNode similarityMatchNode, KnowledgeRetrievalNode knowledgeRetrievalNode, CategoryValidationNode categoryValidationNode, StructuredValidationNode structuredValidationNode) {
+    public ClftGraph(ClassificationLLMNode classificationLLMNode, 
+                     SimilarityMatchNode similarityMatchNode, 
+                     KnowledgeRetrievalNode knowledgeRetrievalNode,
+                     EnhancedRetrievalNode enhancedRetrievalNode,
+                     CategoryValidationNode categoryValidationNode, 
+                     StructuredValidationNode structuredValidationNode) {
         this.classificationLLMNode = classificationLLMNode;
         this.similarityMatchNode = similarityMatchNode;
         this.knowledgeRetrievalNode = knowledgeRetrievalNode;
+        this.enhancedRetrievalNode = enhancedRetrievalNode;
         this.categoryValidationNode = categoryValidationNode;
         this.structuredValidationNode = structuredValidationNode;
     }
@@ -66,7 +74,7 @@ public class ClftGraph {
 
         StateGraph stateGraph = new StateGraph(keyStrategyFactory)
                 .addNode("similarityMatch", node_async(similarityMatchNode))
-                .addNode("knowledgeRetrieval", node_async(knowledgeRetrievalNode))
+                .addNode("knowledgeRetrieval", node_async(enhancedRetrievalNode))  // 使用增强型检索节点
                 .addNode("classification", node_async(classificationLLMNode))
                 .addNode("categoryValidation", node_async(categoryValidationNode))
                 .addNode("structuredValidation", node_async(structuredValidationNode))

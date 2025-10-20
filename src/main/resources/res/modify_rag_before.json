@@ -1,0 +1,75 @@
+{
+  "columnInfoList": [
+    {
+      "columnComment": "月份",
+      "columnName": "month_id",
+      "id": "8388546",
+      "columnClassifications": [
+        "公共资源数据"
+      ],
+      "columnLevel": "2",
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，字段“month_id”仅记录业务发生的月份（证据：字段名及注释均为时间维度，未出现任何个人身份信息），属于公开的时间统计信息，泄露后仅影响数据统计的完整性，不会直接危及个人隐私或业务安全；因此判定为企业自身数据的公共资源数据，级别为2级。",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": "85"
+    },
+    {
+      "columnComment": "电话号码",
+      "columnName": "device_number",
+      "id": "8388551",
+      "columnClassifications": [
+        "网络身份标识"
+      ],
+      "columnLevel": "3",
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，字段“device_number”记录用户的手机号码（证据：字段注释为“电话号码”，历史相似字段映射至“网络身份标识”，且手机号属于可直接联系用户的联系方式），属于用户可识别的联系信息，泄露后可能导致骚扰、诈骗或精准营销等风险；因此归类为网络身份标识，级别为3级。",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": "92"
+    },
+    {
+      "columnComment": "发送短信数",
+      "columnName": "out_sms_num",
+      "id": "8388553",
+      "columnClassifications": [
+        "用户使用习惯和行为分析数据"
+      ],
+      "columnLevel": "3",
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，字段“out_sms_num”统计单日/单月用户发送的短信条数（证据：字段注释及历史相似字段均指向短信频次统计），属于用户行为使用数据，泄露后可能被用于画像分析或商业营销，属于用户使用习惯和行为分析数据，级别为3级。",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": "88"
+    },
+    {
+      "columnComment": "总短信数",
+      "columnName": "total_sms_num",
+      "id": "8388554",
+      "columnClassifications": [
+        "用户使用习惯和行为分析数据"
+      ],
+      "columnLevel": "3",
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，字段“total_sms_num”记录用户在统计周期内的短信总量（证据：字段注释与历史相似字段均指向短信统计），属于用户行为数据，泄露后同样可能被用于行为画像或营销决策，故归类为用户使用习惯和行为分析数据，级别为3级。",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": "88"
+    },
+    {
+      "columnComment": "日",
+      "columnName": "day_id",
+      "id": "8388557",
+      "columnClassifications": [
+        "公共资源数据"
+      ],
+      "columnLevel": "2",
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，字段“day_id”仅表示业务发生的具体日期（证据：字段名及注释均为时间维度），属于公开的时间信息，泄露后不涉及个人隐私，仅影响统计完整性，判定为公共资源数据，级别为2级。",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": "85"
+    }
+  ],
+  "dbId": "4482",
+  "id": "55520",
+  "tbComment": "综采cBss业务单用户短信表(日)",
+  "tbName": "DWA_S_D_CUS_CB_PP_SMS",
+  "tableClassifications": [
+    "用户使用习惯和行为分析数据"
+  ],
+  "tableLevel": "3",
+  "tableReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，表中包含手机号（device_number）以及用户短信使用统计（out_sms_num、total_sms_num），其中手机号属于可直接联系用户的个人信息，属于网络身份标识，等级为3级；短信使用统计属于用户行为数据，同样为3级。依据‘就高不就低’原则，表级别取最高字段级别，确定为3级。表整体记录的是用户的通信行为，属于用户使用习惯和行为分析数据。",
+  "modelKey": "gpt-oss-120b",
+  "modelReliability": "90"
+}
