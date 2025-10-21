@@ -51,3 +51,9 @@ logging:
       modelcontextprotocol:
         client: INFO
         spec: INFO
+
+
+similarity:
+  match:
+    url: https://172.16.22.18:8901/py/match
+    timeout: 30000

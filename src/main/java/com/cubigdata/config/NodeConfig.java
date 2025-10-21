@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -52,7 +53,7 @@ public class NodeConfig {
      * 相似度匹配节点配置
      */
     @Bean("similarityMatchNode")
-    public SimilarityMatchNode similarityMatchNode() throws SSLException {
+    public SimilarityMatchNode similarityMatchNode(@Value("${similarity.match.url}") String similarityMatchUrl) throws SSLException {
         HttpClient httpClient = HttpClient.create()
                 .secure(ssl -> {
                     try {
@@ -69,7 +70,7 @@ public class NodeConfig {
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
 
-        return new SimilarityMatchNode(webClient, "https://172.16.22.18:8901/py/match");
+        return new SimilarityMatchNode(webClient, similarityMatchUrl);
     }
 
 
