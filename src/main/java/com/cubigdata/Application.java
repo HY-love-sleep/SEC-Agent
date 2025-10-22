@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.reader.TextReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  * @author yHong
@@ -40,7 +42,7 @@ public class Application {
     CommandLineRunner vectorIngestRunner(
             @Value("${rag.source:classpath:rag/rag_friendly_classification.txt}") Resource ragSource,
             @Value("${rag.vector-file-path:classpath:vectors/classification_vectors.json}") String vectorFilePath,
-            EmbeddingModel embeddingModel,
+            @Value("ollamaEmbeddingModel") OllamaEmbeddingModel embeddingModel,
             @Qualifier("classificationVectorStore") VectorStore classificationVectorStore
     ) {
         return args -> {
@@ -70,7 +72,7 @@ public class Application {
                         // 从JAR中读取资源，复制到临时文件
                         try (InputStream inputStream = vectorFile.getInputStream()) {
                             Path tempFile = Files.createTempFile("classification_vectors_", ".json");
-                            Files.copy(inputStream, tempFile, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                            Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
                             fileToLoad = tempFile.toFile();
                             isTemporaryFile = true;
                             log.info("📋 已将classpath资源复制到临时文件: {}", tempFile);
@@ -132,7 +134,7 @@ public class Application {
      * 分类分级向量存储，用于后续 RAG 检索
      */
     @Bean
-    public VectorStore classificationVectorStore(EmbeddingModel embeddingModel) {
+    public VectorStore classificationVectorStore(@Qualifier("ollamaEmbeddingModel") EmbeddingModel embeddingModel) {
         return SimpleVectorStore
                 .builder(embeddingModel).build();
     }

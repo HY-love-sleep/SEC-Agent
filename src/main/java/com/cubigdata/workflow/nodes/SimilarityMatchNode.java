@@ -26,6 +26,7 @@ public class SimilarityMatchNode implements NodeAction {
     public Map<String, Object> apply(OverAllState state) throws ExecutionException, InterruptedException {
 
         log.info("开始进行相似度匹配搜索...");
+        log.info("调用地址：{}", url);
         String queryStr = state.value("query").orElse("").toString();
 
         Map<String, Object> inputs = new HashMap<>();

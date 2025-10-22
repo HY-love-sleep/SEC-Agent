@@ -1,0 +1,160 @@
+# 数据库表分类分级任务
+
+## 任务目标
+对数据库表进行自动分类分级，输出JSON格式结果。
+
+## 输入信息
+- 表信息：{{#1752826684738.query#}}
+- 目标类别：{{#1752826684738.category#}}
+- 知识库：{{#context#}}
+
+## 输出要求
+返回JSON格式，包含以下字段：
+- columnInfoList: 字段分类信息数组
+- tableClassifications: 表分类
+- tableLevel: 表级别
+- tableReasoning: 表推理逻辑
+- modelKey: "gpt-oss-120b"
+- modelReliability: 置信度(0-100)
+
+## 分类规则
+### 宏类别判定
+1. 用户相关数据：包含身份证、手机号、银行卡等4级敏感要素
+2. 企业自身数据：其他所有数据
+
+### 级别判定
+- 4级：身份证、银行卡、密码、生物特征等
+- 3级：姓名、地址、联系方式等
+- 2级：公开信息、统计类数据
+- 1级：完全公开数据
+
+### 特殊规则
+- 独立"姓名"为3级，与敏感信息共现为4级
+- 企业数据发布后降级至2级
+- 表级别取字段最高级
+
+## 推理要求
+- 首句必须包含："根据《中国联通数据分类分级安全管理规范（试行）》要求"
+- 说明判定依据和证据
+- 分析数据敏感性和泄露后果
+
+## JSON Schema
+{
+  "columnInfoList": [
+    {
+      "columnComment": "居住地址",
+      "columnName": "residence_address",
+      "id": 3,
+      "columnClassifications": "用户私密资料",
+      "columnLevel": "3",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": 30,
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，本字段包含的信息为：个人常住地理位置信息（证据：命名/别名词典映射“residence_address→居住地址”，且字段描述与居住地址语义一致；若存在样例，通常含省市区/街道/门牌等结构化要素）。结合备注3的敏感性分析，该信息泄露会导致隐私暴露与线下安全风险；据此判定目标类别为“用户私密资料”，级别为3级，并提醒可能带来骚扰、精准营销、线下跟踪等后果"
+    },
+    {
+      "columnComment": "密码",
+      "columnName": "password",
+      "id": 2,
+      "columnClassifications": "用户密码及关联信息",
+      "columnLevel": "4",
+      "modelKey": "gpt-oss-120b",
+      "modelReliability": 95,
+      "columnReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，本字段包含的信息为：账号登录凭据或其派生信息（证据：命名映射“password→口令/密码”；若样例为哈希/盐值/密文，同样指向口令凭据）。结合备注3的敏感性分析与备注4的关联关系规则，该信息一旦泄露可导致未授权访问、账号劫持与系统入侵等严重后果；据此判定目标类别为“用户密码及关联信息”，级别为4级，并提醒需采用强加密与最小化存取控制。"
+    }
+  ],
+  "dbId": "维持原id",
+  "id": "维持原id",
+  "tbComment": "维持原表描述",
+  "tbName": "维持原表名",
+  "tableClassifications": "目标类别",
+  "tableLevel": "4",
+  "tableReasoning": "根据《中国联通数据分类分级安全管理规范（试行）》要求，表中包含姓名、身份证号、手机号等高敏要素（证据：字段清单与样例命中18位身份证格式、11位手机号正则等规则）；遵循就高不就低原则，表级别取全表字段最高级确定为4级；同时因存在4级用户敏感要素，表级别至少为4级。结合字段分布与关键字段证据，可据备注1选择与个人身份标识信息相匹配的目标类别进行标注。推断该表类别为个人信息类，级别为4级。",
+  "modelKey": "gpt-oss-120b",
+  "modelReliability": 92
+}
+jsonschema:{
+  "additionalProperties": false,
+  "properties": {
+    "columnInfoList": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "columnClassifications": {
+            "type": "string"
+          },
+          "columnComment": {
+            "type": "string"
+          },
+          "columnLevel": {
+            "type": "string"
+          },
+          "columnName": {
+            "type": "string"
+          },
+          "columnReasoning": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "modelKey": {
+            "type": "string"
+          },
+          "modelReliability": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "columnComment",
+          "columnName",
+          "columnClassifications",
+          "columnLevel",
+          "columnReasoning",
+          "modelReliability",
+          "modelKey"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "dbId": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "tableClassifications": {
+      "type": "string"
+    },
+    "tableLevel": {
+      "type": "string"
+    },
+    "tableReasoning": {
+      "type": "string"
+    },
+    "tbComment": {
+      "type": "string"
+    },
+    "tbName": {
+      "type": "string"
+    },
+    "modelKey": {
+      "type": "string"
+    },
+    "modelReliability": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "columnInfoList",
+    "dbId",
+    "tbComment",
+    "tbName",
+    "tableClassifications",
+    "tableLevel",
+    "tableReasoning",
+    "modelKey",
+    "modelReliability"
+  ],
+  "type": "object"
+}

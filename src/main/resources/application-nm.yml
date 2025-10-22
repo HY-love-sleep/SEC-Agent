@@ -17,12 +17,12 @@ spring:
         options:
           model: deepseek_70b
           stream: false
-    ollama:
-      base-url: http://134.0.111.206:11434
       embedding:
-        model: bge-m3:567m
+        base-url:  http://134.0.111.206:11434/api/embeddings
+        enabled: true
+        api-key: ${AI_EMBEDDING_API_KEY}
         options:
-          keep-alive: 15m
+          model: bge-m3:567m
 
   mandatory-file-encoding: UTF-8
 
