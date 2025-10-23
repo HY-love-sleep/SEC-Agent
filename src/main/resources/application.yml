@@ -8,10 +8,10 @@ server:
 
 spring:
   application:
-    name: mcp
+    name: clft-agent
   ai:
     openai:
-      base-url: http://134.0.111.209:10025/v1
+      base-url: http://134.0.111.209:10025/v1/chat/completions
       api-key: ${AI_MAAS_API_KEY}
       chat:
         options:
@@ -21,8 +21,6 @@ spring:
       base-url: http://134.0.111.206:11434
       embedding:
         model: bge-m3:567m
-        options:
-          keep-alive: 15m
 
   mandatory-file-encoding: UTF-8
 

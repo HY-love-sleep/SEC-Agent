@@ -30,7 +30,10 @@ import java.nio.file.StandardCopyOption;
  * @since 2025/9/15 17:33
  * @version 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(
+        exclude = { org.springframework.ai.model.ollama.autoconfigure.OllamaChatAutoConfiguration.class }
+)
+
 @Slf4j
 public class Application {
 
@@ -42,7 +45,7 @@ public class Application {
     CommandLineRunner vectorIngestRunner(
             @Value("${rag.source:classpath:rag/rag_friendly_classification.txt}") Resource ragSource,
             @Value("${rag.vector-file-path:classpath:vectors/classification_vectors.json}") String vectorFilePath,
-            @Value("ollamaEmbeddingModel") OllamaEmbeddingModel embeddingModel,
+            @Qualifier("ollamaEmbeddingModel") OllamaEmbeddingModel embeddingModel,
             @Qualifier("classificationVectorStore") VectorStore classificationVectorStore
     ) {
         return args -> {
